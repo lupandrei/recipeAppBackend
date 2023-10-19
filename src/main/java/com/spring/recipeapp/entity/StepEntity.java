@@ -9,12 +9,14 @@ import lombok.Data;
 
 @Data
 @Entity
-@Table(name="step",schema = "public")
+@Table(name = "step", schema = "public")
 public class StepEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private String number;
     private String text;
+
 }
