@@ -2,7 +2,7 @@
 <databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
                    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
                    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
-    <!-- Define your changesets here -->
+    <!-- SCHEMA -->
     <include file="liquibase/2023-10-19-user-changelog.xml"/>
     <include file="liquibase/2023-10-19-recipe-changelog.xml"/>
     <include file="liquibase/2023-10-19-step-changelog.xml"/>
@@ -10,4 +10,8 @@
     <include file="liquibase/2023-10-19-user-recipe-changelog.xml"/>
     <include file="liquibase/2023-10-19-following-changelog.xml"/>
     <include file="liquibase/2023-10-19-review-changelog.xml"/>
+
+    <!-- POPULATION -->
+    <include file="liquibase/2023-10-20-user-population-changelog.xml"/>
+    <include file="liquibase/2023-10-20-user-update-passwords.xml"/>
 </databaseChangeLog>

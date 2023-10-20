@@ -1,4 +1,10 @@
 package com.spring.recipeapp.dto;
 
-public class UserBasicDataDto {
+
+import lombok.Data;
+
+@Data
+public class UserBasicDataDto extends UserSignUpDto {
+    private String profilePicture;
+    private String description;
 }
