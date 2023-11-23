@@ -13,13 +13,19 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @Entity
+@Builder
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "recipe", schema = "public")
 public class RecipeEntity {
 
@@ -39,19 +45,19 @@ public class RecipeEntity {
     private Cuisine cuisine;
 
     @ManyToOne
-    @JoinColumn(name = "user_id")
+    @JoinColumn(name = "fk_user_id", referencedColumnName = "id")
     private UserEntity user;
 
     @OneToMany
-    @JoinColumn(name = "recipe_id")
+    @JoinColumn(name = "fk_recipe_id")
     private List<IngredientEntity> ingredients = new ArrayList<>();
 
     @OneToMany
-    @JoinColumn(name = "recipe_id")
+    @JoinColumn(name = "fk_recipe_id")
     private List<StepEntity> steps = new ArrayList<>();
 
     @OneToMany
-    @JoinColumn(name = "recipe_id")
+    @JoinColumn(name = "fk_recipe_id")
     private List<ReviewEntity> reviews = new ArrayList<>();
 
 }

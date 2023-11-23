@@ -22,10 +22,10 @@ public class ReviewEntity {
     @Column(name = "review_text")
     private String reviewText;
 
-    private Integer rating;
+    private double rating;
 
     @ManyToOne
-    @JoinColumn(name = "recipe_id")
+    @JoinColumn(name = "fk_recipe_id")
     private RecipeEntity recipe;
 
 }

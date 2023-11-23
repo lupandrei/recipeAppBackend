@@ -10,5 +10,7 @@ public enum Cuisine {
     THAI,
     GREEK,
     SPANISH,
-    AMERICAN
+    AMERICAN,
+    MEDITERRANEAN
+
 }

@@ -18,6 +18,16 @@
             <column name="cook_time" type="VARCHAR(256)"></column>
             <column name="photo" type="VARCHAR(256)"></column>
             <column name="cuisine" type="VARCHAR(256)"></column>
+            <column name="fk_user_id" type="BIGINT"></column>
         </createTable>
+        <addForeignKeyConstraint
+                baseColumnNames="fk_user_id"
+                baseTableName="recipe"
+                constraintName="fk_user_recipe"
+                referencedColumnNames="id"
+                referencedTableName="user"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"
+        />
     </changeSet>
 </databaseChangeLog>
