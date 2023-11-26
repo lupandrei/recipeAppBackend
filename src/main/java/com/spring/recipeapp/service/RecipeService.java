@@ -5,15 +5,19 @@ import com.spring.recipeapp.dto.ingredient.IngredientDto;
 import com.spring.recipeapp.dto.recipe.RecipeAddDto;
 import com.spring.recipeapp.dto.recipe.RecipeDto;
 import com.spring.recipeapp.dto.recipe.RecipeSpec;
+import com.spring.recipeapp.dto.recipe.RecipeUpdateDto;
 import com.spring.recipeapp.dto.step.StepDto;
 import com.spring.recipeapp.entity.IngredientEntity;
 import com.spring.recipeapp.entity.RecipeEntity;
 import com.spring.recipeapp.entity.StepEntity;
 import com.spring.recipeapp.entity.UserEntity;
 import com.spring.recipeapp.exception.ErrorMessages;
+import com.spring.recipeapp.exception.RecipeNotFoundException;
 import com.spring.recipeapp.exception.UserNotFoundException;
+import com.spring.recipeapp.mapper.IngredientMapper;
 import com.spring.recipeapp.mapper.PaginatedDisplayResponseMapper;
 import com.spring.recipeapp.mapper.RecipeMapper;
+import com.spring.recipeapp.mapper.StepMapper;
 import com.spring.recipeapp.repository.IngredientRepository;
 import com.spring.recipeapp.repository.RecipeRepository;
 import com.spring.recipeapp.repository.StepRepository;
@@ -22,6 +26,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,17 +40,21 @@ public class RecipeService {
     private final UserRepository userRepository;
     private final RecipeMapper recipeMapper;
     private final PaginatedDisplayResponseMapper paginatedDisplayResponseMapper;
+    private final IngredientMapper ingredientMapper;
+    private final StepMapper stepMapper;
 
     @Autowired
     public RecipeService(RecipeRepository recipeRepository, IngredientRepository ingredientRepository,
                          StepRepository stepRepository, UserRepository userRepository, RecipeMapper recipeMapper,
-                         PaginatedDisplayResponseMapper paginatedDisplayResponseMapper) {
+                         PaginatedDisplayResponseMapper paginatedDisplayResponseMapper, IngredientMapper ingredientMapper, StepMapper stepMapper) {
         this.recipeRepository = recipeRepository;
         this.ingredientRepository = ingredientRepository;
         this.stepRepository = stepRepository;
         this.userRepository = userRepository;
         this.recipeMapper = recipeMapper;
         this.paginatedDisplayResponseMapper = paginatedDisplayResponseMapper;
+        this.ingredientMapper = ingredientMapper;
+        this.stepMapper = stepMapper;
     }
 
     public PaginatedDisplayRecipeResponse getFilteredDisplayRecipes(Double rating, String category,
@@ -61,7 +70,6 @@ public class RecipeService {
         RecipeEntity recipeToSave = recipeMapper.addDtoToRecipeEntity(recipeAddDto);
         recipeToSave.setUser(user);
         RecipeEntity recipeSaved = recipeRepository.save(recipeToSave);
-
         List<IngredientEntity> ingredientEntityList = new ArrayList<>();
         for(IngredientDto ingredientDto: recipeAddDto.ingredients()){
             IngredientEntity ingredient =IngredientEntity.builder()
@@ -89,5 +97,38 @@ public class RecipeService {
         return recipeMapper.toRecipeDto(recipeSaved);
     }
 
+    public void deleteById(Long id) {
+        recipeRepository.findById(id).orElseThrow(
+                ()->new RecipeNotFoundException(ErrorMessages.RECIPE_NOT_FOUND.formatted(id))
+        );
+        recipeRepository.deleteById(id);
+    }
 
+    @Transactional
+    public RecipeDto updateRecipe(RecipeUpdateDto recipeUpdateDto) {
+        RecipeEntity recipeEntity= recipeRepository.findById(recipeUpdateDto.getId()).orElseThrow(
+                ()->new RecipeNotFoundException(ErrorMessages.RECIPE_NOT_FOUND.formatted(recipeUpdateDto.getId()))
+        );
+        recipeEntity.setTitle(recipeUpdateDto.getTitle());
+        recipeEntity.setCuisine(recipeUpdateDto.getCuisine());
+        recipeEntity.setPhoto(recipeUpdateDto.getPhoto());
+        recipeEntity.setCookTime(recipeUpdateDto.getCookTime());
+
+        recipeEntity.getIngredients().clear();
+        List<IngredientEntity> ingredientEntityList =ingredientMapper.toEntities(recipeUpdateDto.getIngredients());
+
+        for(IngredientEntity ingredient:ingredientEntityList){
+            ingredient.setRecipe(recipeEntity);
+        }
+        recipeEntity.getIngredients().addAll(ingredientEntityList);
+
+        List<StepEntity> stepEntityList=stepMapper.toEntities(recipeUpdateDto.getSteps());
+        recipeEntity.getSteps().clear();
+        for(StepEntity step:stepEntityList){
+            step.setRecipe(recipeEntity);
+        }
+        recipeEntity.getSteps().addAll(stepEntityList);
+
+        return recipeMapper.toRecipeDto(recipeRepository.save(recipeEntity));
+    }
 }

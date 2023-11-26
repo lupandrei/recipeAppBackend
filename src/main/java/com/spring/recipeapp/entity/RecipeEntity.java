@@ -2,6 +2,7 @@ package com.spring.recipeapp.entity;
 
 
 import com.spring.recipeapp.enums.Cuisine;
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -15,15 +16,17 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.util.ArrayList;
 import java.util.List;
 
-@Data
 @Entity
 @Builder
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "recipe", schema = "public")
@@ -48,11 +51,11 @@ public class RecipeEntity {
     @JoinColumn(name = "fk_user_id", referencedColumnName = "id")
     private UserEntity user;
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name = "fk_recipe_id")
     private List<IngredientEntity> ingredients = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(cascade = CascadeType.ALL,orphanRemoval = true)
     @JoinColumn(name = "fk_recipe_id")
     private List<StepEntity> steps = new ArrayList<>();
 

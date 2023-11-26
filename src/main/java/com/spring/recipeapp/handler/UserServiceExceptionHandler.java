@@ -3,6 +3,7 @@ package com.spring.recipeapp.handler;
 
 import com.spring.recipeapp.exception.ApiError;
 import com.spring.recipeapp.exception.InvalidPasswordException;
+import com.spring.recipeapp.exception.RecipeNotFoundException;
 import com.spring.recipeapp.exception.UserAlreadyExistsException;
 import com.spring.recipeapp.exception.UserNotFoundException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -53,5 +54,16 @@ public class UserServiceExceptionHandler {
                 )
         );
     }
-
+    @ExceptionHandler(RecipeNotFoundException.class)
+    public ResponseEntity<Object> handleRecipeNotFoundException(RecipeNotFoundException ex,
+                                                                HttpServletRequest request){
+        return ErrorResponseBuilder.buildErrorResponse(
+                new ApiError(
+                        request.getRequestURI(),
+                        ex.getMessage(),
+                        HttpStatus.NOT_FOUND,
+                        LocalDateTime.now()
+                )
+        );
+    }
 }
