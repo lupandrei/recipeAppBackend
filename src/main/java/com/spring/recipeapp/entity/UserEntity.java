@@ -1,6 +1,7 @@
 package com.spring.recipeapp.entity;
 
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -49,10 +50,10 @@ public class UserEntity {
     @OneToMany(mappedBy = "user")
     private List<RecipeEntity> recipes = new ArrayList<>();
 
-    @OneToMany(mappedBy = "follower")
+    @OneToMany(mappedBy = "follower",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<FollowingEntity> followers = new ArrayList<>();
 
-    @OneToMany(mappedBy = "followed")
+    @OneToMany(mappedBy = "followed",cascade = CascadeType.ALL,orphanRemoval = true)
     private List<FollowingEntity> following = new ArrayList<>();
 
 }

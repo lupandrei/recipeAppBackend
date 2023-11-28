@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/recipe")
+@RequestMapping("/recipes")
 public class RecipeController {
     private final  RecipeService recipeService;
 
@@ -46,9 +46,9 @@ public class RecipeController {
         return new ResponseEntity<>(recipeService.addRecipe(recipeAddDto),HttpStatus.CREATED);
     }
     @DeleteMapping("/{id}")
-    public ResponseEntity.BodyBuilder deleteRecipe(@PathVariable Long id){
+    public ResponseEntity<Void>deleteRecipe(@PathVariable Long id){
         recipeService.deleteById(id);
-        return ResponseEntity.ok();
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
     @PutMapping("/{id}")
     public ResponseEntity<RecipeDto> updateRecipe(@PathVariable Long id, @RequestBody RecipeUpdateDto recipeUpdateDto){
