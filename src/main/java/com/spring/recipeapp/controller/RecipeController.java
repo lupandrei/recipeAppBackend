@@ -5,6 +5,7 @@ import com.spring.recipeapp.dto.recipe.RecipeAddDto;
 import com.spring.recipeapp.dto.recipe.RecipeDto;
 import com.spring.recipeapp.dto.recipe.RecipeUpdateDto;
 import com.spring.recipeapp.service.RecipeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -42,7 +43,7 @@ public class RecipeController {
     }
 
     @PostMapping
-    public ResponseEntity<RecipeDto>addRecipe(@RequestBody RecipeAddDto recipeAddDto){
+    public ResponseEntity<RecipeDto>addRecipe(@RequestBody @Valid RecipeAddDto recipeAddDto){
         return new ResponseEntity<>(recipeService.addRecipe(recipeAddDto),HttpStatus.CREATED);
     }
     @DeleteMapping("/{id}")

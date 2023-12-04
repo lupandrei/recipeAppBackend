@@ -80,7 +80,6 @@ public class RecipeService {
                     .build();
             ingredientEntityList.add(ingredient);
         }
-        ingredientEntityList=ingredientRepository.saveAll(ingredientEntityList);
 
         List<StepEntity> stepEntityList = new ArrayList<>();
         for(StepDto stepDto:recipeAddDto.steps()){
@@ -91,7 +90,6 @@ public class RecipeService {
                     .build();
             stepEntityList.add(step);
         }
-        stepEntityList=stepRepository.saveAll(stepEntityList);
         recipeSaved.setIngredients(ingredientEntityList);
         recipeSaved.setSteps(stepEntityList);
         return recipeMapper.toRecipeDto(recipeSaved);
