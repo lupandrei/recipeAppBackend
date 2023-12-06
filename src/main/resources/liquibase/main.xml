@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+    <!-- SCHEMA -->
+    <include file="liquibase/2023-10-19-user-changelog.xml"/>
+    <include file="liquibase/2023-10-19-recipe-changelog.xml"/>
+    <include file="liquibase/2023-10-19-step-changelog.xml"/>
+    <include file="liquibase/2023-10-19-ingredient-changelog.xml"/>
+<!--    <include file="liquibase/2023-10-19-user-recipe-changelog.xml"/>-->
+    <include file="liquibase/2023-10-19-following-changelog.xml"/>
+    <include file="liquibase/2023-10-19-review-changelog.xml"/>
+
+    <!-- POPULATION -->
+    <include file="liquibase/2023-10-20-user-population-changelog.xml"/>
+    <include file="liquibase/2023-10-20-user-update-passwords.xml"/>
+    <include file="liquibase/2023-11-22-recipe-population-changelog.xml"/>
+    <include file="liquibase/2023-11-22-review-population-changelog.xml"/>
+    <include file="liquibase/2023-11-22-ingredient-population-changelog.xml"/>
+    <include file="liquibase/2023-12-04-step-population-changelog.xml"/>
+</databaseChangeLog>

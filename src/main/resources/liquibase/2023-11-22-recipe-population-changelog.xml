@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet id="RECIPE-POPULATION-000" author="alup">
+        <insert tableName="recipe">
+            <column name="title" value="Spaghetti Carbonara"/>
+            <column name="cook_time" value="30 minutes"/>
+            <column name="photo" value="https://images.pexels.com/photos/4393021/pexels-photo-4393021.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750&amp;dpr=1"/>
+            <column name="cuisine" value="ITALIAN"/>
+            <column name="fk_user_id" value="1"/>
+        </insert>
+
+        <insert tableName="recipe">
+            <column name="title" value="Chicken Tikka Masala"/>
+            <column name="cook_time" value="45 minutes"/>
+            <column name="photo" value="https://images.pexels.com/photos/4393021/pexels-photo-4393021.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750&amp;dpr=1"/>
+            <column name="cuisine" value="INDIAN"/>
+            <column name="fk_user_id" value="1"/>
+        </insert>
+
+        <insert tableName="recipe">
+            <column name="title" value="Sushi"/>
+            <column name="cook_time" value="60 minutes"/>
+            <column name="photo" value="https://images.pexels.com/photos/4393021/pexels-photo-4393021.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750&amp;dpr=1"/>
+            <column name="cuisine" value="JAPANESE"/>
+            <column name="fk_user_id" value="1"/>
+        </insert>
+
+        <insert tableName="recipe">
+            <column name="title" value="Tacos"/>
+            <column name="cook_time" value="15 minutes"/>
+            <column name="photo" value="https://images.pexels.com/photos/4393021/pexels-photo-4393021.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750&amp;dpr=1"/>
+            <column name="cuisine" value="MEXICAN"/>
+            <column name="fk_user_id" value="1"/>
+        </insert>
+
+        <insert tableName="recipe">
+            <column name="title" value="Pad Thai"/>
+            <column name="cook_time" value="20 minutes"/>
+            <column name="photo" value="https://images.pexels.com/photos/4393021/pexels-photo-4393021.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750&amp;dpr=1"/>
+            <column name="cuisine" value="THAI"/>
+            <column name="fk_user_id" value="1"/>
+        </insert>
+
+        <insert tableName="recipe">
+            <column name="title" value="Hummus and Pita Bread"/>
+            <column name="cook_time" value="10 minutes"/>
+            <column name="photo" value="https://images.pexels.com/photos/4393021/pexels-photo-4393021.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750&amp;dpr=1"/>
+            <column name="cuisine" value="THAI"/>
+            <column name="fk_user_id" value="1"/>
+        </insert>
+        <insert tableName="recipe">
+            <column name="title" value="Pizza Margherita"/>
+            <column name="cook_time" value="30 minutes"/>
+            <column name="photo" value="https://images.pexels.com/photos/4393021/pexels-photo-4393021.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750&amp;dpr=1"/>
+            <column name="cuisine" value="ITALIAN"/>
+            <column name="fk_user_id" value="1"/>
+        </insert>
+
+        <insert tableName="recipe">
+            <column name="title" value="Burgers"/>
+            <column name="cook_time" value="20 minutes"/>
+            <column name="photo" value="https://images.pexels.com/photos/4393021/pexels-photo-4393021.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750&amp;dpr=1"/>
+            <column name="cuisine" value="AMERICAN"/>
+            <column name="fk_user_id" value="1"/>
+        </insert>
+
+        <insert tableName="recipe">
+            <column name="title" value="Falafel and Hummus Platter"/>
+            <column name="cook_time" value="45 minutes"/>
+            <column name="photo" value="https://images.pexels.com/photos/4393021/pexels-photo-4393021.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750&amp;dpr=1"/>
+            <column name="cuisine" value="MEDITERRANEAN"/>
+            <column name="fk_user_id" value="1"/>
+        </insert>
+
+        <insert tableName="recipe">
+            <column name="title" value="Pad Kee Mao (Drunken Noodles)"/>
+            <column name="cook_time" value="40 minutes"/>
+            <column name="photo" value="https://images.pexels.com/photos/4393021/pexels-photo-4393021.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750&amp;dpr=1"/>
+            <column name="cuisine" value="THAI"/>
+            <column name="fk_user_id" value="1"/>
+        </insert>
+
+        <insert tableName="recipe">
+            <column name="title" value="Grilled Salmon with Lemon and Dill"/>
+            <column name="cook_time" value="25 minutes"/>
+            <column name="photo" value="https://images.pexels.com/photos/4393021/pexels-photo-4393021.jpeg?auto=compress&amp;cs=tinysrgb&amp;w=1260&amp;h=750&amp;dpr=1"/>
+            <column name="cuisine" value="MEDITERRANEAN"/>
+            <column name="fk_user_id" value="1"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

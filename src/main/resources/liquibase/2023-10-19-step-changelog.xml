@@ -9,17 +9,23 @@
         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
         http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
-    <changeSet id="USER-TABLE-000" author="alup">
-        <createTable tableName="user">
+    <changeSet id="STEP-TABLE-000" author="alup">
+        <createTable tableName="step">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
-            <column name="first_name" type="VARCHAR(256)"></column>
-            <column name="last_name" type="VARCHAR(256)"></column>
-            <column name="email" type="VARCHAR(256)"></column>
-            <column name="password" type="VARCHAR(256)"></column>
-            <column name ="description" type="VARCHAR(256)"></column>
+            <column name="text" type="VARCHAR(256)"></column>
+            <column name="number" type="INT"></column>
+            <column name="fk_recipe_id" type="BIGINT"></column>
         </createTable>
+        <addForeignKeyConstraint
+                baseColumnNames="fk_recipe_id"
+                baseTableName="step"
+                constraintName="fk_step_recipe"
+                referencedColumnNames="id"
+                referencedTableName="recipe"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"
+        />
     </changeSet>
-
 </databaseChangeLog>

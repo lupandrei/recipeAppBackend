@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet id="INGREDIENT-POPULATION-000" author="your_name">
+
+
+        <insert tableName="ingredient">
+            <column name="name" value="Spaghetti"/>
+            <column name="quantity" value="200"/>
+            <column name="unit" value="grams"/>
+            <column name="fk_recipe_id" value="1"/>
+        </insert>
+
+        <insert tableName="ingredient">
+            <column name="name" value="Guanciale"/>
+            <column name="quantity" value="150"/>
+            <column name="unit" value="grams"/>
+            <column name="fk_recipe_id" value="1"/>
+        </insert>
+
+        <insert tableName="ingredient">
+            <column name="name" value="Pecorino cheese"/>
+            <column name="quantity" value="50"/>
+            <column name="unit" value="grams"/>
+            <column name="fk_recipe_id" value="1"/>
+        </insert>
+
+        <insert tableName="ingredient">
+            <column name="name" value="Black pepper"/>
+            <column name="quantity" value="10"/>
+            <column name="unit" value="grams"/>
+            <column name="fk_recipe_id" value="1"/>
+        </insert>
+
+        <insert tableName="ingredient">
+            <column name="name" value="Eggs"/>
+            <column name="quantity" value="2"/>
+            <column name="unit" value="pieces"/>
+            <column name="fk_recipe_id" value="1"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

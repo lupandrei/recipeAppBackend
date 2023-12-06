@@ -1,0 +1,36 @@
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                                       http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.0.xsd">
+
+    <changeSet id="STEP-POPULATION-000" author="alup">
+        <insert tableName="step">
+            <column name="number" valueNumeric="1"/>
+            <column name="text" value="Boil the water for the pasta"/>
+            <column name="fk_recipe_id" valueNumeric="1"/>
+        </insert>
+        <insert tableName="step">
+            <column name="number" valueNumeric="2"/>
+            <column name="text" value="Cook the pancetta until crispy"/>
+            <column name="fk_recipe_id" valueNumeric="1"/>
+        </insert>
+
+        <insert tableName="step">
+            <column name="number" valueNumeric="3"/>
+            <column name="text" value="Drain the pasta"/>
+            <column name="fk_recipe_id" valueNumeric="1"/>
+        </insert>
+
+        <insert tableName="step">
+            <column name="number" valueNumeric="4"/>
+            <column name="text" value="Mix the egg, cheese, and pepper in a bowl"/>
+            <column name="fk_recipe_id" valueNumeric="1"/>
+        </insert>
+
+        <insert tableName="step">
+            <column name="number" valueNumeric="5"/>
+            <column name="text" value="Combine the pasta and pancetta with the egg mixture"/>
+            <column name="fk_recipe_id" valueNumeric="1"/>
+        </insert>
+    </changeSet>
+</databaseChangeLog>

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.4.xsd">
+
+    <!-- Add 20 user entities using insert statements -->
+    <changeSet id="INSERT-USERS" author="alup">
+        <sql>
+            INSERT INTO public.user (first_name, last_name, email, password, profile_picture)
+            VALUES ('John', 'Doe', 'john.doe@example.com',
+                    '$2a$12$Urm3/XY.BArmK2BLb61fV.6QLoWXRVvwkc8jaoP.DJ.C4AY8SpsoO',
+                    'https://st4.depositphotos.com/1017986/25404/i/450/depositphotos_254046202-stock-photo-happy-male-indian-chef-in.jpg'),
+                   ('Jane', 'Smith', 'jane.smith@example.com',
+                    '$2a$12$Urm3/XY.BArmK2BLb61fV.6QLoWXRVvwkc8jaoP.DJ.C4AY8SpsoO',
+                    'https://st4.depositphotos.com/1017986/25404/i/450/depositphotos_254046202-stock-photo-happy-male-indian-chef-in.jpg'),
+                   ('Michael', 'Johnson', 'michael.johnson@example.com',
+                    '$2a$12$Urm3/XY.BArmK2BLb61fV.6QLoWXRVvwkc8jaoP.DJ.C4AY8SpsoO',
+                    'https://st4.depositphotos.com/1017986/25404/i/450/depositphotos_254046202-stock-photo-happy-male-indian-chef-in.jpg'),
+                   ('Sarah', 'Williams', 'sarah.williams@example.com',
+                    '$2a$12$Urm3/XY.BArmK2BLb61fV.6QLoWXRVvwkc8jaoP.DJ.C4AY8SpsoO',
+                    'https://st4.depositphotos.com/1017986/25404/i/450/depositphotos_254046202-stock-photo-happy-male-indian-chef-in.jpg'),
+                   ('David', 'Martinez', 'david.martinez@example.com',
+                    '$2a$12$Urm3/XY.BArmK2BLb61fV.6QLoWXRVvwkc8jaoP.DJ.C4AY8SpsoO',
+                    'https://st4.depositphotos.com/1017986/25404/i/450/depositphotos_254046202-stock-photo-happy-male-indian-chef-in.jpg'),
+                   ('Emily', 'Davis', 'emily.davis@example.com',
+                    '$2a$12$Urm3/XY.BArmK2BLb61fV.6QLoWXRVvwkc8jaoP.DJ.C4AY8SpsoO',
+                    'https://st4.depositphotos.com/1017986/25404/i/450/depositphotos_254046202-stock-photo-happy-male-indian-chef-in.jpg'),
+                   ('William', 'Brown', 'william.brown@example.com',
+                    '$2a$12$Urm3/XY.BArmK2BLb61fV.6QLoWXRVvwkc8jaoP.DJ.C4AY8SpsoO',
+                    'https://st4.depositphotos.com/1017986/25404/i/450/depositphotos_254046202-stock-photo-happy-male-indian-chef-in.jpg'),
+                   ('Olivia', 'Anderson', 'olivia.anderson@example.com',
+                    '$2a$12$Urm3/XY.BArmK2BLb61fV.6QLoWXRVvwkc8jaoP.DJ.C4AY8SpsoO',
+                    'https://st4.depositphotos.com/1017986/25404/i/450/depositphotos_254046202-stock-photo-happy-male-indian-chef-in.jpg'),
+                   ('James', 'Garcia', 'james.garcia@example.com',
+                    '$2a$12$Urm3/XY.BArmK2BLb61fV.6QLoWXRVvwkc8jaoP.DJ.C4AY8SpsoO',
+                    'https://st4.depositphotos.com/1017986/25404/i/450/depositphotos_254046202-stock-photo-happy-male-indian-chef-in.jpg'),
+                   ('Sophia', 'Wilson', 'sophia.wilson@example.com',
+                    '$2a$12$Urm3/XY.BArmK2BLb61fV.6QLoWXRVvwkc8jaoP.DJ.C4AY8SpsoO',
+                    'https://st4.depositphotos.com/1017986/25404/i/450/depositphotos_254046202-stock-photo-happy-male-indian-chef-in.jpg'),
+                   ('Benjamin', 'Taylor', 'benjamin.taylor@example.com',
+                    '$2a$12$Urm3/XY.BArmK2BLb61fV.6QLoWXRVvwkc8jaoP.DJ.C4AY8SpsoO',
+                    'https://st4.depositphotos.com/1017986/25404/i/450/depositphotos_254046202-stock-photo-happy-male-indian-chef-in.jpg'),
+                   ('Ava', 'Rodriguez', 'ava.rodriguez@example.com',
+                    '$2a$12$Urm3/XY.BArmK2BLb61fV.6QLoWXRVvwkc8jaoP.DJ.C4AY8SpsoO',
+                    'https://st4.depositphotos.com/1017986/25404/i/450/depositphotos_254046202-stock-photo-happy-male-indian-chef-in.jpg'),
+                   ('Alexander', 'Lopez', 'alexander.lopez@example.com',
+                    '$2a$12$Urm3/XY.BArmK2BLb61fV.6QLoWXRVvwkc8jaoP.DJ.C4AY8SpsoO',
+                    'https://st4.depositphotos.com/1017986/25404/i/450/depositphotos_254046202-stock-photo-happy-male-indian-chef-in.jpg'),
+                   ('Mia', 'Hernandez', 'mia.hernandez@example.com',
+                    '$2a$12$Urm3/XY.BArmK2BLb61fV.6QLoWXRVvwkc8jaoP.DJ.C4AY8SpsoO',
+                    'https://st4.depositphotos.com/1017986/25404/i/450/depositphotos_254046202-stock-photo-happy-male-indian-chef-in.jpg'),
+                   ('Ethan', 'Gonzalez', 'ethan.gonzalez@example.com',
+                    '$2a$12$Urm3/XY.BArmK2BLb61fV.6QLoWXRVvwkc8jaoP.DJ.C4AY8SpsoO',
+                    'https://st4.depositphotos.com/1017986/25404/i/450/depositphotos_254046202-stock-photo-happy-male-indian-chef-in.jpg'),
+                   ('Charlotte', 'Perez', 'charlotte.perez@example.com',
+                    '$2a$12$Urm3/XY.BArmK2BLb61fV.6QLoWXRVvwkc8jaoP.DJ.C4AY8SpsoO',
+                    'https://st4.depositphotos.com/1017986/25404/i/450/depositphotos_254046202-stock-photo-happy-male-indian-chef-in.jpg'),
+                   ('William', 'Sanchez', 'william.sanchez@example.com',
+                    '$2a$12$Urm3/XY.BArmK2BLb61fV.6QLoWXRVvwkc8jaoP.DJ.C4AY8SpsoO',
+                    'https://st4.depositphotos.com/1017986/25404/i/450/depositphotos_254046202-stock-photo-happy-male-indian-chef-in.jpg'),
+                   ('Isabella', 'Martin', 'isabella.martin@example.com',
+                    '$2a$12$Urm3/XY.BArmK2BLb61fV.6QLoWXRVvwkc8jaoP.DJ.C4AY8SpsoO',
+                    'https://st4.depositphotos.com/1017986/25404/i/450/depositphotos_254046202-stock-photo-happy-male-indian-chef-in.jpg'),
+                   ('Liam', 'Young', 'liam.young@example.com',
+                    '$2a$12$Urm3/XY.BArmK2BLb61fV.6QLoWXRVvwkc8jaoP.DJ.C4AY8SpsoO',
+                    'https://st4.depositphotos.com/1017986/25404/i/450/depositphotos_254046202-stock-photo-happy-male-indian-chef-in.jpg'),
+                   ('Aiden', 'Clark', 'aiden.clark@example.com',
+                    '$2a$12$Urm3/XY.BArmK2BLb61fV.6QLoWXRVvwkc8jaoP.DJ.C4AY8SpsoO',
+                    'https://st4.depositphotos.com/1017986/25404/i/450/depositphotos_254046202-stock-photo-happy-male-indian-chef-in.jpg');
+        </sql>
+    </changeSet>
+</databaseChangeLog>

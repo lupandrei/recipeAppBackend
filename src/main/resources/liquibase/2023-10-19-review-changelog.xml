@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+        xmlns:pro="http://www.liquibase.org/xml/ns/pro"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+        http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd
+        http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
+
+    <changeSet id="REVIEW-TABLE-000" author="alup">
+        <createTable tableName="review">
+            <column name="id" type="BIGINT" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="fk_recipe_id" type="BIGINT"></column>
+            <column name="fk_user_id" type="BIGINT"></column>
+            <column name="rating" type="FLOAT"></column>
+            <column name="review_text" type="VARCHAR(255)"></column>
+        </createTable>
+        <addForeignKeyConstraint
+                baseColumnNames="fk_recipe_id"
+                baseTableName="review"
+                constraintName="fk_review_recipe"
+                referencedColumnNames="id"
+                referencedTableName="recipe"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"
+        />
+        <addForeignKeyConstraint
+                baseColumnNames="fk_user_id"
+                baseTableName="review"
+                constraintName="fk_review_user"
+                referencedColumnNames="id"
+                referencedTableName="user"
+                onDelete="CASCADE"
+                onUpdate="CASCADE"
+        />
+    </changeSet>
+</databaseChangeLog>
