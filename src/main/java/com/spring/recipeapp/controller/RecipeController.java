@@ -56,5 +56,9 @@ public class RecipeController {
         recipeUpdateDto.setId(id);
         return new ResponseEntity<>(recipeService.updateRecipe(recipeUpdateDto),HttpStatus.OK);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<RecipeDto> getRecipeById(@PathVariable Long id){
+        return new ResponseEntity<>(recipeService.getRecipeById(id),HttpStatus.OK);
+    }
 
 }

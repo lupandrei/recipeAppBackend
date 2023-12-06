@@ -18,13 +18,11 @@ public interface RecipeMapper {
     RecipeEntity addDtoToRecipeEntity(RecipeAddDto recipeAddDto);
 
     @Named("toRecipeDto")
-    @Mapping(source="user",target="email",qualifiedByName = "userToEmail")
+    @Mapping(source="user",target="userRecipeDisplayInformationDto")
+    @Mapping(source="reviews",target="rating",qualifiedByName = "mapToRating")
+    @Mapping(source="reviews",target="countReviews",qualifiedByName = "mapToCountReviews")
     RecipeDto toRecipeDto(RecipeEntity recipeEntity);
 
-    @Named("userToEmail")
-    default String userToEmail(UserEntity user){
-        return user.getEmail();
-    }
 
     @Mapping(source="reviews",target = "rating", qualifiedByName = "mapToRating")
     RecipeDisplayDto toDisplayDto(RecipeEntity recipe);
@@ -39,6 +37,10 @@ public interface RecipeMapper {
             totalRating += review.getRating();
         }
         return totalRating / reviews.size();
+    }
+    @Named("mapToCountReviews")
+    default Integer mapToCountReviews(List<ReviewEntity> reviews) {
+        return reviews.size();
     }
     List<RecipeDisplayDto> toDisplayDtos(List<RecipeEntity> all);
 }

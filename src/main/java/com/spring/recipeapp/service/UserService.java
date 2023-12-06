@@ -1,19 +1,27 @@
 package com.spring.recipeapp.service;
 
 
-import com.spring.recipeapp.dto.UserBasicDataDto;
-import com.spring.recipeapp.dto.UserLoginDto;
-import com.spring.recipeapp.dto.UserSignUpDto;
+import com.spring.recipeapp.controller.customResponse.PaginatedUserResponse;
+import com.spring.recipeapp.dto.user.UserBasicDataDto;
+import com.spring.recipeapp.dto.user.UserLoginDto;
+import com.spring.recipeapp.dto.user.UserRecipeDisplayInformationDto;
+import com.spring.recipeapp.dto.user.UserSignUpDto;
 import com.spring.recipeapp.entity.UserEntity;
 import com.spring.recipeapp.exception.ErrorMessages;
 import com.spring.recipeapp.exception.InvalidPasswordException;
 import com.spring.recipeapp.exception.UserAlreadyExistsException;
 import com.spring.recipeapp.exception.UserNotFoundException;
+import com.spring.recipeapp.mapper.PaginatedUserResponseMapper;
 import com.spring.recipeapp.mapper.UserMapper;
 import com.spring.recipeapp.repository.UserRepository;
+import com.spring.recipeapp.specification.UserSpec;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class UserService {
@@ -22,12 +30,15 @@ public class UserService {
 
     private final UserMapper userMapper;
 
+    private final PaginatedUserResponseMapper paginatedUserResponseMapper;
+
     private final PasswordEncoder encoder;
 
     @Autowired
-    public UserService(UserRepository userRepository, UserMapper userMapper, PasswordEncoder encoder) {
+    public UserService(UserRepository userRepository, UserMapper userMapper, PaginatedUserResponseMapper paginatedUserResponseMapper, PasswordEncoder encoder) {
         this.userRepository = userRepository;
         this.userMapper = userMapper;
+        this.paginatedUserResponseMapper = paginatedUserResponseMapper;
         this.encoder = encoder;
     }
 
@@ -53,4 +64,7 @@ public class UserService {
         return userMapper.userEntityToUserBasicData(userEntity);
     }
 
+    public PaginatedUserResponse findUsersByEmail(String email, Pageable pageable) {
+        return paginatedUserResponseMapper.toPaginatedUsersResponse(userRepository.findAll(UserSpec.filterBy(email),pageable));
+    }
 }

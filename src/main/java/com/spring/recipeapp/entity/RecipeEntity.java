@@ -30,7 +30,7 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "recipe", schema = "public")
-public class RecipeEntity {
+public class    RecipeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

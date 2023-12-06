@@ -1,4 +1,4 @@
-package com.spring.recipeapp.dto;
+package com.spring.recipeapp.dto.user;
 
 
 import lombok.Data;

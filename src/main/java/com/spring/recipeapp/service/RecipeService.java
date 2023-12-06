@@ -129,4 +129,11 @@ public class RecipeService {
 
         return recipeMapper.toRecipeDto(recipeRepository.save(recipeEntity));
     }
+
+    public RecipeDto getRecipeById(Long id) {
+        RecipeEntity recipeEntity= recipeRepository.findById(id).orElseThrow(
+                ()->new RecipeNotFoundException(ErrorMessages.RECIPE_NOT_FOUND.formatted(id))
+        );
+        return recipeMapper.toRecipeDto(recipeEntity);
+    }
 }
