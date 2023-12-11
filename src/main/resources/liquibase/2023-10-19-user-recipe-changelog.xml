@@ -10,7 +10,7 @@
         http://www.liquibase.org/xml/ns/pro http://www.liquibase.org/xml/ns/pro/liquibase-pro-latest.xsd">
 
     <changeSet id="USER-RECIPE-TABLE-000" author="alup">
-        <createTable tableName="user_recipe">
+        <createTable tableName="saved_recipe">
             <column name="id" type="BIGINT" autoIncrement="true">
                 <constraints primaryKey="true"/>
             </column>
@@ -18,7 +18,7 @@
             <column name="fk_recipe_id" type="BIGINT"></column>
         </createTable>
         <addForeignKeyConstraint
-                baseTableName="user_recipe"
+                baseTableName="saved_recipe"
                 baseColumnNames="fk_user_id"
                 constraintName="fk_user_recipe_user"
                 referencedTableName="user"
@@ -26,7 +26,7 @@
                 onDelete="CASCADE"
         />
         <addForeignKeyConstraint
-                baseTableName="user_recipe"
+                baseTableName="saved_recipe"
                 baseColumnNames="fk_recipe_id"
                 constraintName="fk_user_recipe_recipe"
                 referencedTableName="recipe"

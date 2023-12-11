@@ -15,6 +15,15 @@ public class RecipeSpec {
 
     private static final String TITLE="title";
     private static final String CUISINE="cuisine";
+    private static final String EMAIL="email";
+
+    public static Specification<RecipeEntity> recipesSavedByUser(String email) {
+        return (root, query, cb) -> {
+            query.distinct(true);
+            var joinSavedRecipes = root.join("savedByUsers");
+            return cb.equal(joinSavedRecipes.get(EMAIL), email);
+        };
+    }
     public static Specification<RecipeEntity> filterBy(Double rating, String cuisine, String title) {
         return (root, query, cb) -> {
             if(rating!=null){
