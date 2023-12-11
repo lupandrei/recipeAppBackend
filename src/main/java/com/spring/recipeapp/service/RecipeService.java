@@ -22,7 +22,9 @@ import com.spring.recipeapp.repository.IngredientRepository;
 import com.spring.recipeapp.repository.RecipeRepository;
 import com.spring.recipeapp.repository.StepRepository;
 import com.spring.recipeapp.repository.UserRepository;
+import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -135,5 +137,10 @@ public class RecipeService {
                 ()->new RecipeNotFoundException(ErrorMessages.RECIPE_NOT_FOUND.formatted(id))
         );
         return recipeMapper.toRecipeDto(recipeEntity);
+    }
+
+    public PaginatedDisplayRecipeResponse getSavedRecipes(String email,Pageable pageable) {
+        return paginatedDisplayResponseMapper.toPaginatedDisplayRecipeResponse(recipeRepository
+                .findAll(RecipeSpec.recipesSavedByUser(email),pageable));
     }
 }

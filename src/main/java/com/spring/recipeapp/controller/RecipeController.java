@@ -2,6 +2,7 @@ package com.spring.recipeapp.controller;
 
 import com.spring.recipeapp.controller.customResponse.PaginatedDisplayRecipeResponse;
 import com.spring.recipeapp.dto.recipe.RecipeAddDto;
+import com.spring.recipeapp.dto.recipe.RecipeDisplayDto;
 import com.spring.recipeapp.dto.recipe.RecipeDto;
 import com.spring.recipeapp.dto.recipe.RecipeUpdateDto;
 import com.spring.recipeapp.service.RecipeService;
@@ -20,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
@@ -60,5 +63,11 @@ public class RecipeController {
     public ResponseEntity<RecipeDto> getRecipeById(@PathVariable Long id){
         return new ResponseEntity<>(recipeService.getRecipeById(id),HttpStatus.OK);
     }
-
+    @GetMapping("/saved")
+    public ResponseEntity<PaginatedDisplayRecipeResponse> getSavedRecipes(@RequestParam String email,
+                                                                          Pageable pageable){
+        return new ResponseEntity<>(recipeService.getSavedRecipes(email,pageable),HttpStatus.OK);
+    }
+    @PostMapping("/save")
+    public ResponseEntity<>
 }

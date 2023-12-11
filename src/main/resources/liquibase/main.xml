@@ -7,7 +7,7 @@
     <include file="liquibase/2023-10-19-recipe-changelog.xml"/>
     <include file="liquibase/2023-10-19-step-changelog.xml"/>
     <include file="liquibase/2023-10-19-ingredient-changelog.xml"/>
-<!--    <include file="liquibase/2023-10-19-user-recipe-changelog.xml"/>-->
+    <include file="liquibase/2023-10-19-user-recipe-changelog.xml"/>
     <include file="liquibase/2023-10-19-following-changelog.xml"/>
     <include file="liquibase/2023-10-19-review-changelog.xml"/>
 
