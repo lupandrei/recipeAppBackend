@@ -2,6 +2,7 @@ package com.spring.recipeapp.dto.recipe;
 
 import com.spring.recipeapp.entity.RecipeEntity;
 import com.spring.recipeapp.entity.ReviewEntity;
+import com.spring.recipeapp.entity.SavedRecipeEntity;
 import com.spring.recipeapp.enums.Cuisine;
 import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Join;
@@ -9,6 +10,8 @@ import jakarta.persistence.criteria.JoinType;
 import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
+
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class RecipeSpec {
@@ -16,12 +19,13 @@ public class RecipeSpec {
     private static final String TITLE="title";
     private static final String CUISINE="cuisine";
     private static final String EMAIL="email";
+    private static final String USER="user";
 
     public static Specification<RecipeEntity> recipesSavedByUser(String email) {
         return (root, query, cb) -> {
-            query.distinct(true);
             var joinSavedRecipes = root.join("savedByUsers");
-            return cb.equal(joinSavedRecipes.get(EMAIL), email);
+            query.orderBy(cb.desc(joinSavedRecipes.get("time")));
+            return cb.equal(joinSavedRecipes.get(USER).get(EMAIL), email);
         };
     }
     public static Specification<RecipeEntity> filterBy(Double rating, String cuisine, String title) {

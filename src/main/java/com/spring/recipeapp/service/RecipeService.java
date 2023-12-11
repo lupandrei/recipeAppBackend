@@ -4,6 +4,8 @@ import com.spring.recipeapp.controller.customResponse.PaginatedDisplayRecipeResp
 import com.spring.recipeapp.dto.ingredient.IngredientDto;
 import com.spring.recipeapp.dto.recipe.RecipeAddDto;
 import com.spring.recipeapp.dto.recipe.RecipeDto;
+import com.spring.recipeapp.dto.recipe.RecipeSaveDto;
+import com.spring.recipeapp.dto.recipe.RecipeSavedDto;
 import com.spring.recipeapp.dto.recipe.RecipeSpec;
 import com.spring.recipeapp.dto.recipe.RecipeUpdateDto;
 import com.spring.recipeapp.dto.step.StepDto;
@@ -139,8 +141,5 @@ public class RecipeService {
         return recipeMapper.toRecipeDto(recipeEntity);
     }
 
-    public PaginatedDisplayRecipeResponse getSavedRecipes(String email,Pageable pageable) {
-        return paginatedDisplayResponseMapper.toPaginatedDisplayRecipeResponse(recipeRepository
-                .findAll(RecipeSpec.recipesSavedByUser(email),pageable));
-    }
+
 }

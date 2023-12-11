@@ -67,7 +67,7 @@ public class    RecipeEntity {
 
     private List<ReviewEntity> reviews = new ArrayList<>();
 
-    @ManyToMany(mappedBy="savedRecipes", fetch=FetchType.LAZY)
-    private List<UserEntity> savedByUsers = new ArrayList<>();
+    @OneToMany(mappedBy = "recipe")
+    private List<SavedRecipeEntity> savedByUsers = new ArrayList<>();
 
 }
