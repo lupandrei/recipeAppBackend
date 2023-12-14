@@ -1,13 +1,13 @@
 package com.spring.recipeapp.controller;
 
+import com.spring.recipeapp.config.CookieService;
 import com.spring.recipeapp.controller.customResponse.PaginatedUserResponse;
 import com.spring.recipeapp.dto.user.UserBasicDataDto;
 import com.spring.recipeapp.dto.user.UserLoginDto;
-import com.spring.recipeapp.dto.user.UserRecipeDisplayInformationDto;
 import com.spring.recipeapp.dto.user.UserSignUpDto;
 import com.spring.recipeapp.service.UserService;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
-import jakarta.validation.constraints.Email;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -20,23 +20,24 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.List;
-
 @CrossOrigin(origins = "*")
 @RestController
 @RequestMapping("/users")
 public class UserController {
+
+    private final CookieService cookieService;
     private final UserService userService;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(CookieService cookieService, UserService userService) {
+        this.cookieService = cookieService;
         this.userService = userService;
     }
 
     @PostMapping(path = "/login")
-    public ResponseEntity<UserBasicDataDto> login(@RequestBody @Valid UserLoginDto user) {
-        UserBasicDataDto userBasicDataDto = userService.login(user);
-        return new ResponseEntity<>(userBasicDataDto, HttpStatus.OK);
+    public ResponseEntity<String> login(@RequestBody @Valid UserLoginDto user, HttpServletResponse httpServletResponse) {
+        cookieService.addCookie(userService.login(user),httpServletResponse);
+        return ResponseEntity.ok().build();
     }
 
     @PostMapping(path = "/sign-up")
