@@ -4,7 +4,8 @@ public record  UserRecipeDisplayInformationDto (
         String firstName,
         String lastName,
         String email,
-        String photo
+        String photo,
+        Boolean isFollowing
 ){
 
 }

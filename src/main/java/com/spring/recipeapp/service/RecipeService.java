@@ -4,8 +4,6 @@ import com.spring.recipeapp.controller.customResponse.PaginatedDisplayRecipeResp
 import com.spring.recipeapp.dto.ingredient.IngredientDto;
 import com.spring.recipeapp.dto.recipe.RecipeAddDto;
 import com.spring.recipeapp.dto.recipe.RecipeDto;
-import com.spring.recipeapp.dto.recipe.RecipeSaveDto;
-import com.spring.recipeapp.dto.recipe.RecipeSavedDto;
 import com.spring.recipeapp.dto.recipe.RecipeSpec;
 import com.spring.recipeapp.dto.recipe.RecipeUpdateDto;
 import com.spring.recipeapp.dto.step.StepDto;
@@ -24,9 +22,7 @@ import com.spring.recipeapp.repository.IngredientRepository;
 import com.spring.recipeapp.repository.RecipeRepository;
 import com.spring.recipeapp.repository.StepRepository;
 import com.spring.recipeapp.repository.UserRepository;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -62,8 +58,8 @@ public class RecipeService {
     }
 
     public PaginatedDisplayRecipeResponse getFilteredDisplayRecipes(Double rating, String category,
-                                                                    String title, Pageable pageable) {
-        Specification<RecipeEntity> spec = RecipeSpec.filterBy(rating,category,title);
+                                                                    String title,String email, Pageable pageable) {
+        Specification<RecipeEntity> spec = RecipeSpec.filterBy(rating,category,title,email);
         return paginatedDisplayResponseMapper.toPaginatedDisplayRecipeResponse(recipeRepository.findAll(spec,pageable));
     }
 

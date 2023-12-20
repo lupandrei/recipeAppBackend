@@ -5,7 +5,6 @@ import com.spring.recipeapp.dto.recipe.RecipeDisplayDto;
 import com.spring.recipeapp.dto.recipe.RecipeDto;
 import com.spring.recipeapp.entity.RecipeEntity;
 import com.spring.recipeapp.entity.ReviewEntity;
-import com.spring.recipeapp.entity.UserEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;

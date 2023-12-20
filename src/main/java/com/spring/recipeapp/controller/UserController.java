@@ -3,6 +3,7 @@ package com.spring.recipeapp.controller;
 import com.spring.recipeapp.config.CookieService;
 import com.spring.recipeapp.controller.customResponse.PaginatedUserResponse;
 import com.spring.recipeapp.dto.user.UserBasicDataDto;
+import com.spring.recipeapp.dto.user.UserFollowingDto;
 import com.spring.recipeapp.dto.user.UserLoginDto;
 import com.spring.recipeapp.dto.user.UserSignUpDto;
 import com.spring.recipeapp.service.UserService;
@@ -12,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -49,7 +51,13 @@ public class UserController {
     @GetMapping()
     public ResponseEntity<PaginatedUserResponse> findUsersByEmail(
             @RequestParam() String email,
-            Pageable pageable) {
-        return new ResponseEntity<>(userService.findUsersByEmail(email,pageable), HttpStatus.OK);
+            Pageable pageable,
+            Authentication authentication) {
+        System.out.println(authentication);
+        return new ResponseEntity<>(userService.findUsersByEmail(email,pageable, authentication.getName()), HttpStatus.OK);
+    }
+    @GetMapping("/following-info")
+    public ResponseEntity<UserFollowingDto> getUserFollowing(@RequestParam String email){
+        return new ResponseEntity<>(userService.getUserFollowingData(email),HttpStatus.OK);
     }
 }

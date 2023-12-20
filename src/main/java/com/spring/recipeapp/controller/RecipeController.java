@@ -3,8 +3,6 @@ package com.spring.recipeapp.controller;
 import com.spring.recipeapp.controller.customResponse.PaginatedDisplayRecipeResponse;
 import com.spring.recipeapp.dto.recipe.RecipeAddDto;
 import com.spring.recipeapp.dto.recipe.RecipeDto;
-import com.spring.recipeapp.dto.recipe.RecipeSaveDto;
-import com.spring.recipeapp.dto.recipe.RecipeSavedDto;
 import com.spring.recipeapp.dto.recipe.RecipeUpdateDto;
 import com.spring.recipeapp.service.RecipeService;
 import jakarta.validation.Valid;
@@ -40,9 +38,10 @@ public class RecipeController {
             @RequestParam(required = false) Double rating,
             @RequestParam(required = false) String category,
             @RequestParam(required = false) String title,
+            @RequestParam(required = false) String email,
             Pageable pageable
     ){
-        return new ResponseEntity<>(recipeService.getFilteredDisplayRecipes(rating,category,title,pageable), HttpStatus.OK);
+        return new ResponseEntity<>(recipeService.getFilteredDisplayRecipes(rating,category,title,email,pageable), HttpStatus.OK);
     }
 
     @PostMapping

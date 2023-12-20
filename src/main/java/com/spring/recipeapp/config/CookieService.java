@@ -37,7 +37,7 @@ public class CookieService {
         return cookie;
     }
     public void addCookie(UserBasicDataDto userBasicDataDto, HttpServletResponse httpServletResponse){
-        String jwt = "";
+        String jwt;
 
         if(userBasicDataDto!=null) {
             jwt = jwtTokenService.createJwtToken(userBasicDataDto.getEmail());

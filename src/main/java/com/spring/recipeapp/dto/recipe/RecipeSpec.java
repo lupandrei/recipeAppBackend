@@ -2,7 +2,6 @@ package com.spring.recipeapp.dto.recipe;
 
 import com.spring.recipeapp.entity.RecipeEntity;
 import com.spring.recipeapp.entity.ReviewEntity;
-import com.spring.recipeapp.entity.SavedRecipeEntity;
 import com.spring.recipeapp.enums.Cuisine;
 import jakarta.persistence.criteria.Expression;
 import jakarta.persistence.criteria.Join;
@@ -11,7 +10,6 @@ import jakarta.persistence.criteria.Predicate;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 public class RecipeSpec {
@@ -28,7 +26,7 @@ public class RecipeSpec {
             return cb.equal(joinSavedRecipes.get(USER).get(EMAIL), email);
         };
     }
-    public static Specification<RecipeEntity> filterBy(Double rating, String cuisine, String title) {
+    public static Specification<RecipeEntity> filterBy(Double rating, String cuisine, String title,String email) {
         return (root, query, cb) -> {
             if(rating!=null){
                 Join<RecipeEntity, List<ReviewEntity>> reviewsJoin = root.join("reviews", JoinType.LEFT);
@@ -38,7 +36,8 @@ public class RecipeSpec {
             query.groupBy(root.get("id"), root.get("cookTime"), root.get("cuisine"), root.get("photo"), root.get("title"), root.get("user"));
             Predicate titlePredicate = hasTitle(title).toPredicate(root, query, cb);
             Predicate categoryPredicate = hasCuisine(cuisine).toPredicate(root, query, cb);
-            return cb.and(titlePredicate, categoryPredicate);
+            Predicate emailPredicate = hasEmail(email).toPredicate(root,query,cb);
+            return cb.and(titlePredicate, categoryPredicate,emailPredicate);
         };
     }
 
@@ -56,6 +55,15 @@ public class RecipeSpec {
         return (root, query, cb) -> {
             if (StringUtils.hasText(title)) {
                 return cb.like(cb.lower(root.get(TITLE)), "%" + title.toLowerCase() + "%");
+            } else {
+                return cb.conjunction();
+            }
+        };
+    }
+    private static Specification<RecipeEntity> hasEmail(String email) {
+        return (root, query, cb) -> {
+            if (StringUtils.hasText(email)) {
+                return cb.equal(cb.lower(root.get(USER).get(EMAIL)), email.toLowerCase());
             } else {
                 return cb.conjunction();
             }
