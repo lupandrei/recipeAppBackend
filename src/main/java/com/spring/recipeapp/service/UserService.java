@@ -62,8 +62,10 @@ public class UserService {
         return userMapper.userEntityToUserBasicData(userEntity);
     }
 
-    public PaginatedUserResponse findUsersByEmail(String email, Pageable pageable,String loggedInUser) {
-        return paginatedUserResponseMapper.toPaginatedUsersResponse(userRepository.findUsersByEmail(email,pageable,loggedInUser));
+    public PaginatedUserResponse findUsersByEmail(String email,String emailUserProfile, Pageable pageable, String loggedInUser, Boolean follower,
+                                                  Boolean followed) {
+        return paginatedUserResponseMapper.toPaginatedUsersResponse(userRepository
+                .findUsersByEmail(email,emailUserProfile,pageable,loggedInUser,follower,followed));
     }
 
     public UserFollowingDto getUserFollowingData(String email){

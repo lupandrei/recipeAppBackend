@@ -9,6 +9,7 @@ import com.spring.recipeapp.entity.SavedRecipeEntity;
 import com.spring.recipeapp.entity.UserEntity;
 import com.spring.recipeapp.exception.ErrorMessages;
 import com.spring.recipeapp.exception.RecipeNotFoundException;
+import com.spring.recipeapp.exception.SavedRecipeException;
 import com.spring.recipeapp.exception.UserNotFoundException;
 import com.spring.recipeapp.mapper.PaginatedDisplayResponseMapper;
 import com.spring.recipeapp.repository.RecipeRepository;
@@ -34,8 +35,8 @@ public class SavedRecipeService {
     }
 
     public PaginatedDisplayRecipeResponse getSavedRecipes(String email, Pageable pageable) {
-        return paginatedDisplayResponseMapper.toPaginatedDisplayRecipeResponse(recipeRepository
-                .findAll(RecipeSpec.recipesSavedByUser(email),pageable));
+        return paginatedDisplayResponseMapper.fromRecipeDisplayDtotoPaginatedDisplayResponse(savedRecipeRepostory.
+                findAllSavedRecipes(email,pageable));
     }
 
     public RecipeSavedDto saveRecipe(RecipeSaveDto recipeSaveDto) {
@@ -61,4 +62,10 @@ public class SavedRecipeService {
         return recipeSavedDto;
     }
 
+    public void removeSavedRecipe(Long id, String email) {
+        SavedRecipeEntity savedRecipeEntity = savedRecipeRepostory.findByRecipe_IdAndUser_Email(id,email).orElseThrow(
+                ()-> new SavedRecipeException(ErrorMessages.SAVED_RECIPE_NOT_FOUND.formatted(email,id))
+        );
+        savedRecipeRepostory.delete(savedRecipeEntity);
+    }
 }

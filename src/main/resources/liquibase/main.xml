@@ -18,4 +18,7 @@
     <include file="liquibase/2023-11-22-review-population-changelog.xml"/>
     <include file="liquibase/2023-11-22-ingredient-population-changelog.xml"/>
     <include file="liquibase/2023-12-04-step-population-changelog.xml"/>
+
+    <!-- ALTER -->
+    <include file="liquibase/2023-12-27-review-alter-changelog.xml"/>
 </databaseChangeLog>

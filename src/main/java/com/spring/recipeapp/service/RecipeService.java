@@ -1,14 +1,17 @@
 package com.spring.recipeapp.service;
 
 import com.spring.recipeapp.controller.customResponse.PaginatedDisplayRecipeResponse;
+import com.spring.recipeapp.controller.customResponse.PaginatedDisplayReviewResponse;
 import com.spring.recipeapp.dto.ingredient.IngredientDto;
 import com.spring.recipeapp.dto.recipe.RecipeAddDto;
 import com.spring.recipeapp.dto.recipe.RecipeDto;
-import com.spring.recipeapp.dto.recipe.RecipeSpec;
 import com.spring.recipeapp.dto.recipe.RecipeUpdateDto;
+import com.spring.recipeapp.dto.recipe.RecipeWithStatusDto;
+import com.spring.recipeapp.dto.review.ReviewAddDto;
 import com.spring.recipeapp.dto.step.StepDto;
 import com.spring.recipeapp.entity.IngredientEntity;
 import com.spring.recipeapp.entity.RecipeEntity;
+import com.spring.recipeapp.entity.ReviewEntity;
 import com.spring.recipeapp.entity.StepEntity;
 import com.spring.recipeapp.entity.UserEntity;
 import com.spring.recipeapp.exception.ErrorMessages;
@@ -16,15 +19,15 @@ import com.spring.recipeapp.exception.RecipeNotFoundException;
 import com.spring.recipeapp.exception.UserNotFoundException;
 import com.spring.recipeapp.mapper.IngredientMapper;
 import com.spring.recipeapp.mapper.PaginatedDisplayResponseMapper;
+import com.spring.recipeapp.mapper.PaginatedDisplayReviewResponseMapper;
 import com.spring.recipeapp.mapper.RecipeMapper;
+import com.spring.recipeapp.mapper.ReviewMapper;
 import com.spring.recipeapp.mapper.StepMapper;
-import com.spring.recipeapp.repository.IngredientRepository;
 import com.spring.recipeapp.repository.RecipeRepository;
-import com.spring.recipeapp.repository.StepRepository;
+import com.spring.recipeapp.repository.ReviewRepository;
 import com.spring.recipeapp.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -35,32 +38,40 @@ import java.util.List;
 public class RecipeService {
 
     private final RecipeRepository recipeRepository;
-    private final IngredientRepository ingredientRepository;
-    private final StepRepository stepRepository;
+
+    private final ReviewRepository reviewRepository;
     private final UserRepository userRepository;
     private final RecipeMapper recipeMapper;
     private final PaginatedDisplayResponseMapper paginatedDisplayResponseMapper;
     private final IngredientMapper ingredientMapper;
     private final StepMapper stepMapper;
 
+    private final ReviewMapper reviewMapper;
+    private final PaginatedDisplayReviewResponseMapper paginatedDisplayReviewResponseMapper;
+
     @Autowired
-    public RecipeService(RecipeRepository recipeRepository, IngredientRepository ingredientRepository,
-                         StepRepository stepRepository, UserRepository userRepository, RecipeMapper recipeMapper,
-                         PaginatedDisplayResponseMapper paginatedDisplayResponseMapper, IngredientMapper ingredientMapper, StepMapper stepMapper) {
+    public RecipeService(RecipeRepository recipeRepository, ReviewRepository reviewRepository,
+                         UserRepository userRepository, RecipeMapper recipeMapper,
+                         PaginatedDisplayResponseMapper paginatedDisplayResponseMapper, IngredientMapper ingredientMapper,
+                         StepMapper stepMapper, ReviewMapper reviewMapper,
+                         PaginatedDisplayReviewResponseMapper paginatedDisplayReviewResponseMapper) {
         this.recipeRepository = recipeRepository;
-        this.ingredientRepository = ingredientRepository;
-        this.stepRepository = stepRepository;
+        this.reviewRepository = reviewRepository;
         this.userRepository = userRepository;
         this.recipeMapper = recipeMapper;
         this.paginatedDisplayResponseMapper = paginatedDisplayResponseMapper;
         this.ingredientMapper = ingredientMapper;
         this.stepMapper = stepMapper;
+        this.reviewMapper = reviewMapper;
+        this.paginatedDisplayReviewResponseMapper = paginatedDisplayReviewResponseMapper;
     }
 
     public PaginatedDisplayRecipeResponse getFilteredDisplayRecipes(Double rating, String category,
-                                                                    String title,String email, Pageable pageable) {
-        Specification<RecipeEntity> spec = RecipeSpec.filterBy(rating,category,title,email);
-        return paginatedDisplayResponseMapper.toPaginatedDisplayRecipeResponse(recipeRepository.findAll(spec,pageable));
+                                                                    String title, String email, Boolean isSaved,
+                                                                    String currentUser, Pageable pageable) {
+
+        return paginatedDisplayResponseMapper.fromRecipeDisplayDtotoPaginatedDisplayResponse(recipeRepository
+                .findFilteredRecipes(currentUser,email,title, category,rating,pageable));
     }
 
     public RecipeDto addRecipe(RecipeAddDto recipeAddDto) {
@@ -130,12 +141,41 @@ public class RecipeService {
         return recipeMapper.toRecipeDto(recipeRepository.save(recipeEntity));
     }
 
-    public RecipeDto getRecipeById(Long id) {
-        RecipeEntity recipeEntity= recipeRepository.findById(id).orElseThrow(
+    public RecipeDto getRecipeWithStatusById(Long id,String email){
+        recipeRepository.findById(id).orElseThrow(
                 ()->new RecipeNotFoundException(ErrorMessages.RECIPE_NOT_FOUND.formatted(id))
         );
-        return recipeMapper.toRecipeDto(recipeEntity);
+        RecipeWithStatusDto recipeEntity= recipeRepository.getRecipeWithStatusById(id,email);
+        RecipeDto recipeDto= recipeMapper.recipeWithStatusToRecipeDto(recipeEntity);
+        recipeDto.getUserRecipeDisplayInformationDto().setIsFollowing(userRepository
+                .isFollowing(email,recipeDto.getUserRecipeDisplayInformationDto().getEmail()));
+        return recipeDto;
     }
 
+    public PaginatedDisplayReviewResponse getRecipeReviews(Long id, Pageable pageable) {
+        recipeRepository.findById(id).orElseThrow(
+                ()->new RecipeNotFoundException(ErrorMessages.RECIPE_NOT_FOUND.formatted(id))
+        );
+        return paginatedDisplayReviewResponseMapper.toPaginatedReviewResponse(
+                reviewMapper.toReviewsDto(recipeRepository.findReviewsByRecipeId(id,pageable))
+        );
+    }
 
+    public ReviewAddDto addRecipeReview(ReviewAddDto reviewAddDto){
+        RecipeEntity recipeEntity=recipeRepository.findById(reviewAddDto.getId()).orElseThrow(
+                ()->new RecipeNotFoundException(ErrorMessages.RECIPE_NOT_FOUND.formatted(reviewAddDto.getId()))
+        );
+        UserEntity userEntity =userRepository.findByEmail(reviewAddDto.getEmail()).orElseThrow(
+                ()->new UserNotFoundException(ErrorMessages.ENTITY_NOT_FOUND_MSG.formatted(reviewAddDto.getEmail()))
+        );
+        ReviewEntity reviewEntity = ReviewEntity.builder()
+                .reviewText(reviewAddDto.getReviewText())
+                .rating(reviewAddDto.getRating())
+                .recipe(recipeEntity)
+                .user(userEntity)
+                .time(reviewAddDto.getTime())
+                .build();
+        reviewRepository.save(reviewEntity);
+        return reviewAddDto;
+    }
 }

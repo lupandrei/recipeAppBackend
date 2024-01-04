@@ -4,19 +4,25 @@ import com.spring.recipeapp.dto.ingredient.IngredientDto;
 import com.spring.recipeapp.dto.step.StepDto;
 import com.spring.recipeapp.dto.user.UserRecipeDisplayInformationDto;
 import com.spring.recipeapp.enums.Cuisine;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.List;
 
-public record RecipeDto(
-        Integer id,
-        String title,
-        List<StepDto> steps,
-        List<IngredientDto>ingredients,
-        String photo,
-        Cuisine cuisine,
-        String cookTime,
-        Double rating,
-        Integer countReviews,
-        UserRecipeDisplayInformationDto userRecipeDisplayInformationDto
-) {
+@Data
+@AllArgsConstructor
+@NoArgsConstructor
+public class RecipeDto {
+    private Integer id;
+    private String title;
+    private List<StepDto> steps;
+    private List<IngredientDto> ingredients;
+    private String photo;
+    private Cuisine cuisine;
+    private String cookTime;
+    private Double rating;
+    private Integer countReviews;
+    private UserRecipeDisplayInformationDto userRecipeDisplayInformationDto;
+    private Boolean isSaved;
 }

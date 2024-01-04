@@ -50,11 +50,15 @@ public class UserController {
 
     @GetMapping()
     public ResponseEntity<PaginatedUserResponse> findUsersByEmail(
-            @RequestParam() String email,
+            @RequestParam(required = false) String email,
+            @RequestParam(defaultValue ="false",  required = false) Boolean follower,
+            @RequestParam(defaultValue ="false",  required = false) Boolean followed,
+            @RequestParam(required = false) String emailUserProfile,
             Pageable pageable,
             Authentication authentication) {
-        System.out.println(authentication);
-        return new ResponseEntity<>(userService.findUsersByEmail(email,pageable, authentication.getName()), HttpStatus.OK);
+        return new ResponseEntity<>(userService.findUsersByEmail(email,emailUserProfile,pageable,
+                authentication.getName(),follower,followed),
+                HttpStatus.OK);
     }
     @GetMapping("/following-info")
     public ResponseEntity<UserFollowingDto> getUserFollowing(@RequestParam String email){
