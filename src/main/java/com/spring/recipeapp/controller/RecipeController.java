@@ -3,6 +3,7 @@ package com.spring.recipeapp.controller;
 import com.spring.recipeapp.controller.customResponse.PaginatedDisplayRecipeResponse;
 import com.spring.recipeapp.controller.customResponse.PaginatedDisplayReviewResponse;
 import com.spring.recipeapp.dto.recipe.RecipeAddDto;
+import com.spring.recipeapp.dto.recipe.RecipeAddedDto;
 import com.spring.recipeapp.dto.recipe.RecipeDto;
 import com.spring.recipeapp.dto.recipe.RecipeUpdateDto;
 import com.spring.recipeapp.dto.review.ReviewAddDto;
@@ -50,7 +51,7 @@ public class RecipeController {
     }
 
     @PostMapping
-    public ResponseEntity<RecipeDto>addRecipe(@RequestBody @Valid RecipeAddDto recipeAddDto){
+    public ResponseEntity<RecipeAddedDto>addRecipe(@RequestBody @Valid RecipeAddDto recipeAddDto){
         return new ResponseEntity<>(recipeService.addRecipe(recipeAddDto),HttpStatus.CREATED);
     }
     @DeleteMapping("/{id}")

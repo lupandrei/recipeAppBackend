@@ -1,6 +1,7 @@
 package com.spring.recipeapp.mapper;
 
 import com.spring.recipeapp.dto.recipe.RecipeAddDto;
+import com.spring.recipeapp.dto.recipe.RecipeAddedDto;
 import com.spring.recipeapp.dto.recipe.RecipeDisplayDto;
 import com.spring.recipeapp.dto.recipe.RecipeDto;
 import com.spring.recipeapp.dto.recipe.RecipeWithStatusDto;
@@ -24,6 +25,9 @@ public interface RecipeMapper {
     @Mapping(source="reviews",target="countReviews",qualifiedByName = "mapToCountReviews")
     RecipeDto toRecipeDto(RecipeEntity recipeEntity);
 
+
+    @Named("toRecipeAddedDto")
+    RecipeAddedDto toRecipeAddedDto(RecipeEntity recipeEntity);
 
     @Mapping(source="reviews",target = "rating", qualifiedByName = "mapToRating")
     RecipeDisplayDto toDisplayDto(RecipeEntity recipe);

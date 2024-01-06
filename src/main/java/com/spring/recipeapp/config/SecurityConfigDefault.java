@@ -30,6 +30,8 @@ public class SecurityConfigDefault {
                         .requestMatchers(antMatcher("/users/login")).permitAll())
                 .authorizeHttpRequests(request -> request.requestMatchers(antMatcher("/users/signup"))
                         .permitAll())
+                .authorizeHttpRequests(request -> request.requestMatchers(antMatcher("/sba-websocket/**"))
+                        .permitAll())
                 .authorizeHttpRequests(request -> request.requestMatchers(antMatcher("/**"))
                         .authenticated())
                 .exceptionHandling(exception -> exception.authenticationEntryPoint(unauthorizedHandler))

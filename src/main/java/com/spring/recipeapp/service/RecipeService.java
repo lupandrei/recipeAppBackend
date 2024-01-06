@@ -3,7 +3,9 @@ package com.spring.recipeapp.service;
 import com.spring.recipeapp.controller.customResponse.PaginatedDisplayRecipeResponse;
 import com.spring.recipeapp.controller.customResponse.PaginatedDisplayReviewResponse;
 import com.spring.recipeapp.dto.ingredient.IngredientDto;
+import com.spring.recipeapp.dto.notification.RecipeAddNotification;
 import com.spring.recipeapp.dto.recipe.RecipeAddDto;
+import com.spring.recipeapp.dto.recipe.RecipeAddedDto;
 import com.spring.recipeapp.dto.recipe.RecipeDto;
 import com.spring.recipeapp.dto.recipe.RecipeUpdateDto;
 import com.spring.recipeapp.dto.recipe.RecipeWithStatusDto;
@@ -37,6 +39,7 @@ import java.util.List;
 @Service
 public class RecipeService {
 
+    private final NotificationService notificationService;
     private final RecipeRepository recipeRepository;
 
     private final ReviewRepository reviewRepository;
@@ -50,11 +53,12 @@ public class RecipeService {
     private final PaginatedDisplayReviewResponseMapper paginatedDisplayReviewResponseMapper;
 
     @Autowired
-    public RecipeService(RecipeRepository recipeRepository, ReviewRepository reviewRepository,
+    public RecipeService(NotificationService notificationService, RecipeRepository recipeRepository, ReviewRepository reviewRepository,
                          UserRepository userRepository, RecipeMapper recipeMapper,
                          PaginatedDisplayResponseMapper paginatedDisplayResponseMapper, IngredientMapper ingredientMapper,
                          StepMapper stepMapper, ReviewMapper reviewMapper,
                          PaginatedDisplayReviewResponseMapper paginatedDisplayReviewResponseMapper) {
+        this.notificationService = notificationService;
         this.recipeRepository = recipeRepository;
         this.reviewRepository = reviewRepository;
         this.userRepository = userRepository;
@@ -74,7 +78,7 @@ public class RecipeService {
                 .findFilteredRecipes(currentUser,email,title, category,rating,pageable));
     }
 
-    public RecipeDto addRecipe(RecipeAddDto recipeAddDto) {
+    public RecipeAddedDto addRecipe(RecipeAddDto recipeAddDto) {
         UserEntity user = userRepository.findByEmail(recipeAddDto.email()).orElseThrow(
                 ()->new UserNotFoundException(ErrorMessages.ENTITY_NOT_FOUND_MSG.formatted((recipeAddDto.email())))
         );
@@ -103,7 +107,15 @@ public class RecipeService {
         }
         recipeSaved.setIngredients(ingredientEntityList);
         recipeSaved.setSteps(stepEntityList);
-        return recipeMapper.toRecipeDto(recipeSaved);
+        RecipeAddNotification recipeAddNotification = RecipeAddNotification.builder()
+                .id(recipeSaved.getId())
+                .title(recipeSaved.getTitle())
+                .email(user.getEmail())
+                .firstName(user.getFirstName())
+                .lastName(user.getLastName())
+                .build();
+        notificationService.notifyFollowers(recipeAddDto.email(),"/topic/recipes",recipeAddNotification);
+        return recipeMapper.toRecipeAddedDto(recipeSaved);
     }
 
     public void deleteById(Long id) {
@@ -113,7 +125,6 @@ public class RecipeService {
         recipeRepository.deleteById(id);
     }
 
-    @Transactional
     public RecipeDto updateRecipe(RecipeUpdateDto recipeUpdateDto) {
         RecipeEntity recipeEntity= recipeRepository.findById(recipeUpdateDto.getId()).orElseThrow(
                 ()->new RecipeNotFoundException(ErrorMessages.RECIPE_NOT_FOUND.formatted(recipeUpdateDto.getId()))

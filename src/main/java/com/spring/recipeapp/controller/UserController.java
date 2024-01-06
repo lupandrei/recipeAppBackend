@@ -6,6 +6,7 @@ import com.spring.recipeapp.dto.user.UserBasicDataDto;
 import com.spring.recipeapp.dto.user.UserFollowingDto;
 import com.spring.recipeapp.dto.user.UserLoginDto;
 import com.spring.recipeapp.dto.user.UserSignUpDto;
+import com.spring.recipeapp.service.NotificationService;
 import com.spring.recipeapp.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.validation.Valid;
@@ -28,17 +29,20 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
     private final CookieService cookieService;
+    private final NotificationService notificationService;
     private final UserService userService;
 
     @Autowired
-    public UserController(CookieService cookieService, UserService userService) {
+    public UserController(CookieService cookieService, NotificationService notificationService, UserService userService) {
         this.cookieService = cookieService;
+        this.notificationService = notificationService;
         this.userService = userService;
     }
 
     @PostMapping(path = "/login")
     public ResponseEntity<String> login(@RequestBody @Valid UserLoginDto user, HttpServletResponse httpServletResponse) {
         cookieService.addCookie(userService.login(user),httpServletResponse);
+        notificationService.addUser(user.getEmail());
         return ResponseEntity.ok().build();
     }
 
