@@ -30,6 +30,7 @@ public class FollowingController {
     }
     @DeleteMapping()
     public ResponseEntity<Void> unfollowUser(@RequestBody FollowingDto followingDto){
+        System.out.println(followingDto);
         followingService.unfollow(followingDto);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

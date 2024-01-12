@@ -10,4 +10,5 @@ public class RecipeDisplayDto {
     private String cookTime;
     private Double rating;
     private String photo;
+    private Boolean isSaved;
 }

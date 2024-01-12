@@ -2,9 +2,9 @@ package com.spring.recipeapp.service;
 
 
 import com.spring.recipeapp.controller.customResponse.PaginatedUserResponse;
+import com.spring.recipeapp.dto.user.UserFollowingDto;
 import com.spring.recipeapp.dto.user.UserBasicDataDto;
 import com.spring.recipeapp.dto.user.UserLoginDto;
-import com.spring.recipeapp.dto.user.UserRecipeDisplayInformationDto;
 import com.spring.recipeapp.dto.user.UserSignUpDto;
 import com.spring.recipeapp.entity.UserEntity;
 import com.spring.recipeapp.exception.ErrorMessages;
@@ -14,19 +14,16 @@ import com.spring.recipeapp.exception.UserNotFoundException;
 import com.spring.recipeapp.mapper.PaginatedUserResponseMapper;
 import com.spring.recipeapp.mapper.UserMapper;
 import com.spring.recipeapp.repository.UserRepository;
-import com.spring.recipeapp.specification.UserSpec;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 @Service
 public class UserService {
 
     private final UserRepository userRepository;
+
 
     private final UserMapper userMapper;
 
@@ -37,6 +34,7 @@ public class UserService {
     @Autowired
     public UserService(UserRepository userRepository, UserMapper userMapper, PaginatedUserResponseMapper paginatedUserResponseMapper, PasswordEncoder encoder) {
         this.userRepository = userRepository;
+
         this.userMapper = userMapper;
         this.paginatedUserResponseMapper = paginatedUserResponseMapper;
         this.encoder = encoder;
@@ -64,7 +62,15 @@ public class UserService {
         return userMapper.userEntityToUserBasicData(userEntity);
     }
 
-    public PaginatedUserResponse findUsersByEmail(String email, Pageable pageable) {
-        return paginatedUserResponseMapper.toPaginatedUsersResponse(userRepository.findAll(UserSpec.filterBy(email),pageable));
+    public PaginatedUserResponse findUsersByEmail(String email,String emailUserProfile, Pageable pageable, String loggedInUser, Boolean follower, Boolean followed) {
+        return paginatedUserResponseMapper.toPaginatedUsersResponse(userRepository
+                .findUsersByEmail(email,emailUserProfile,pageable,loggedInUser,follower,followed));
+    }
+
+    public UserFollowingDto getUserFollowingData(String email){
+        userRepository.findByEmail(email).orElseThrow(
+                ()->new UserNotFoundException(ErrorMessages.ENTITY_NOT_FOUND_MSG.formatted(email))
+        );
+        return new UserFollowingDto(userRepository.getUserFollowing(email));
     }
 }

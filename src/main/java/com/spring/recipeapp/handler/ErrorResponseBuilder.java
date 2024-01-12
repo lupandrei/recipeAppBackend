@@ -5,6 +5,6 @@ import org.springframework.http.ResponseEntity;
 
 public class ErrorResponseBuilder {
     public static ResponseEntity<Object> buildErrorResponse(ApiError apiError) {
-        return new ResponseEntity<Object>(apiError, apiError.statusCode());
+        return new ResponseEntity<>(apiError, apiError.statusCode());
     }
 }

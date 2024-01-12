@@ -1,6 +1,9 @@
 package com.spring.recipeapp.entity;
 
+
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -13,27 +16,29 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.time.LocalDateTime;
+
 @Entity
 @Builder
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-@Table(name = "ingredient", schema = "public")
-public class IngredientEntity {
+@Table(name = "saved_recipe", schema = "public")
+public class SavedRecipeEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "fk_user_id", referencedColumnName = "id")
+    private UserEntity user;
 
-    private Float quantity;
-
-    private String unit;
-
-    @ManyToOne
-    @JoinColumn(name = "fk_recipe_id")
+    @ManyToOne(fetch=FetchType.LAZY)
+    @JoinColumn(name = "fk_recipe_id", referencedColumnName = "id")
     private RecipeEntity recipe;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm")
+    private LocalDateTime time;
 }
