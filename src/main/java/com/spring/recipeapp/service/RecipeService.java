@@ -16,6 +16,7 @@ import com.spring.recipeapp.entity.RecipeEntity;
 import com.spring.recipeapp.entity.ReviewEntity;
 import com.spring.recipeapp.entity.StepEntity;
 import com.spring.recipeapp.entity.UserEntity;
+import com.spring.recipeapp.enums.Cuisine;
 import com.spring.recipeapp.exception.ErrorMessages;
 import com.spring.recipeapp.exception.RecipeNotFoundException;
 import com.spring.recipeapp.exception.UserNotFoundException;
@@ -73,9 +74,13 @@ public class RecipeService {
     public PaginatedDisplayRecipeResponse getFilteredDisplayRecipes(Double rating, String category,
                                                                     String title, String email, Boolean isSaved,
                                                                     String currentUser, Pageable pageable) {
-
+        Cuisine cuisine;
+        if(category!=null)
+             cuisine = Cuisine.valueOf(category);
+        else
+            cuisine=null;
         return paginatedDisplayResponseMapper.fromRecipeDisplayDtotoPaginatedDisplayResponse(recipeRepository
-                .findFilteredRecipes(currentUser,email,title, category,rating,pageable));
+                .findFilteredRecipes(currentUser,email,title,cuisine ,rating,pageable));
     }
 
     public RecipeAddedDto addRecipe(RecipeAddDto recipeAddDto) {

@@ -43,7 +43,7 @@ public interface RecipeRepository extends JpaRepository<RecipeEntity,Long> {
             @Param("currentUser") String currentUser,
             @Param("email") String email,
             @Param("title") String title,
-            @Param("cuisine") String cuisine,
+            @Param("cuisine") Cuisine cuisine,
             @Param("rating") Double rating,
             Pageable pageable);
 
