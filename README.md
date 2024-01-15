@@ -58,7 +58,8 @@ Components used: header, full-image-display, follow-user steps,ingredients(might
 ![viewrecipe2](https://github.com/lupandrei/recipeAppBackend/assets/126556183/e3e6edef-55d6-48cb-aa47-546af2878cd6)
 ![viewrecipe3](https://github.com/lupandrei/recipeAppBackend/assets/126556183/040f52fa-2b3d-4118-9184-43502321392d)
 ![viewrecipe4](https://github.com/lupandrei/recipeAppBackend/assets/126556183/3d291c91-70dc-468d-a6bc-eef94ecefd4a)
-
+![review1](https://github.com/lupandrei/recipeAppBackend/assets/126556183/dae24694-637c-4247-816a-4acb09a0ef0f)
+![review2](https://github.com/lupandrei/recipeAppBackend/assets/126556183/23987bf0-f90f-468c-bb54-5bcbc0984619)
 
 **Search Users Page**
 
