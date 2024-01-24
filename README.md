@@ -73,5 +73,6 @@ Components used: header, search-filter-bar, full-image-display-wrapper
 ![search-recipes](https://github.com/lupandrei/recipeAppFrontend/assets/126556183/59b75f35-65dc-4531-9cb5-c1061c273bcb)
 
 **Saved Recipes**
+
 ![savedrecipes](https://github.com/lupandrei/recipeAppBackend/assets/126556183/ebc4081c-e290-462c-b25f-d112d5fc53b3)
 
